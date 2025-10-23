@@ -1,8 +1,8 @@
-import { ErrorBoundary } from '@/components/common/ErrorBoundary';
-import React from 'react';
+import { ErrorBoundary } from "@/components/common/ErrorBoundary";
+import React from "react";
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider } from '@/providers/ThemeProvider';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ThemeProvider } from "@/providers/ThemeProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,11 +15,17 @@ const queryClient = new QueryClient({
   },
 });
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+export default function Providers({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <ErrorBoundary>
       <ThemeProvider>
-        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

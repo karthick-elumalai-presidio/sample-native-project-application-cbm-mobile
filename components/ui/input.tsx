@@ -13,7 +13,9 @@ function Input({
         props.editable === false &&
           cn(
             "opacity-50",
-            Platform.select({ web: "disabled:pointer-events-none disabled:cursor-not-allowed" })
+            Platform.select({
+              web: "disabled:pointer-events-none disabled:cursor-not-allowed",
+            }),
           ),
         Platform.select({
           web: cn(
@@ -23,7 +25,7 @@ function Input({
           ),
           native: "placeholder:text-muted-foreground/50",
         }),
-        className
+        className,
       )}
       {...props}
     />

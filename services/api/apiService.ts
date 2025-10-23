@@ -1,6 +1,6 @@
 // apiService.ts
-import axios, { AxiosInstance } from 'axios';
-import { API_BASE_URL } from '@/services/api/apiConfig';
+import axios, { AxiosInstance } from "axios";
+import { API_BASE_URL } from "@/services/api/apiConfig";
 
 /**
  * API Client for making HTTP requests
@@ -9,7 +9,7 @@ import { API_BASE_URL } from '@/services/api/apiConfig';
 export const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   timeout: 30000, // 30 seconds
 });
