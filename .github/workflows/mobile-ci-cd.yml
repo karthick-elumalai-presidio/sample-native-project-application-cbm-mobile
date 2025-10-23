@@ -89,7 +89,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
-          bundler-cache: true
+          bundler-cache: false
 
       - name: Install Fastlane dependencies
         run: |
@@ -149,7 +149,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
-          bundler-cache: true
+          bundler-cache: false
         
       - name: Install Fastlane dependencies
         run: |
@@ -228,8 +228,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.2'
-          bundler-cache: true
-          working-directory: android
+          bundler-cache: false
 
       - name: Deploy Android to Internal Track
         working-directory: android
