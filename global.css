@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Background & Foreground */
+    --background: #eff6ff;
+    --foreground: #000000; /* Primary text */
+
+    /* Card */
+    --card: #ffffff; /* White cards */
+    --card-foreground: #000000;
+
+    /* Popover */
+    --popover: #ffffff;
+    --popover-foreground: #000000;
+
+    /* Primary (Main Color) */
+    --primary: #0046ad;
+    --primary-foreground: #ffffff; /* White text on primary */
+
+    /* Secondary */
+    --secondary: #62748e; /* Secondary text color */
+    --secondary-foreground: #ffffff;
+
+    /* Muted */
+    --muted: #d9e8ff; /* Lighter version of background */
+    --muted-foreground: #62748e;
+
+    /* Accent (Info) */
+    --accent: #007bff;
+    --accent-foreground: #ffffff;
+
+    /* Destructive (Error) */
+    --destructive: #ff4c4c;
+    --destructive-foreground: #ffffff;
+
+    /* Success */
+    --success: #28a745;
+    --success-foreground: #ffffff;
+
+    /* Warning */
+    --warning: #ffa500;
+    --warning-foreground: #000000;
+
+    /* Border & Input */
+    --border: #c5deff; /* Light blue-gray border */
+    --input: #c5deff;
+    --ring: #0046ad; /* Same as primary */
+
+    /* Radius */
+    --radius: 0.5rem;
+  }
+
+  .dark:root {
+    /* Background & Foreground */
+    --background: #0046ad;
+    --foreground: #ffffff; /* Primary text */
+
+    /* Card */
+    --card: #141414; /* Dark card background */
+    --card-foreground: #ffffff;
+
+    /* Popover */
+    --popover: #141414;
+    --popover-foreground: #ffffff;
+
+    /* Primary (Main Color) */
+    --primary: #007bff;
+    --primary-foreground: #ffffff; /* White text on primary */
+
+    /* Secondary */
+    --secondary: #c9c9c9; /* Secondary text color */
+    --secondary-foreground: #000000;
+
+    /* Muted */
+    --muted: #262626; /* Dark gray for muted elements */
+    --muted-foreground: #c9c9c9;
+
+    /* Accent (Info) */
+    --accent: #007bff;
+    --accent-foreground: #ffffff;
+
+    /* Destructive (Error) */
+    --destructive: #ff4c4c;
+    --destructive-foreground: #ffffff;
+
+    /* Success */
+    --success: #28a745;
+    --success-foreground: #ffffff;
+
+    /* Warning */
+    --warning: #ffa500;
+    --warning-foreground: #000000;
+
+    /* Border & Input */
+    --border: #333333; /* Dark border */
+    --input: #333333;
+    --ring: #007bff; /* Same as primary */
+
+    /* Radius */
+    --radius: 0.5rem;
+  }
+}
