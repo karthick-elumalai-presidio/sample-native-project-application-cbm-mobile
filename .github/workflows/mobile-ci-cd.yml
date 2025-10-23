@@ -38,7 +38,10 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          echo "📦 Installing dependencies..."
+          npm ci || npm install
+          echo "✅ Dependencies installed"
 
       # - name: Fix Formatting Issues
       #   run: |
@@ -69,7 +72,10 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install JS dependencies
-        run: npm install
+        run: |
+          echo "📦 Installing dependencies..."
+          npm ci || npm install
+          echo "✅ Dependencies installed"
 
       - name: Expo Prebuild (Android)
         run: |
@@ -78,16 +84,19 @@ jobs:
             echo "📱 Android native project not found, running prebuild..."
             npm run prebuild:android
           else
-            echo " Android directory exists, running post-prebuild to ensure Fastlane files are present"
+            echo "🗑️ Cleaning Android build cache..."
+            cd android && ./gradlew clean || echo "Clean failed, continuing..."
+            cd ..
+            echo "✅ Android directory exists, running post-prebuild to ensure Fastlane files are present"
             ./scripts/post-prebuild.sh
           fi
           
           echo "🔍 Verifying Android project structure..."
           ls -la android/
           if [ -f "android/gradlew" ]; then
-            echo " Android native project ready"
+            echo "✅ Android native project ready"
           else
-            echo " Android native project not created properly"
+            echo "❌ Android native project not created properly"
             exit 1
           fi
 
@@ -120,6 +129,7 @@ jobs:
         working-directory: android
         env:
           CI: true
+          NODE_ENV: production
           FASTLANE_SKIP_UPDATE_CHECK: true
         run: |
           bundle exec fastlane build_release
@@ -148,7 +158,10 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install JS dependencies
-        run: npm install
+        run: |
+          echo "📦 Installing dependencies..."
+          npm ci || npm install
+          echo "✅ Dependencies installed"
 
       - name: Expo Prebuild (iOS)
         run: |
@@ -157,16 +170,16 @@ jobs:
             echo "📱 iOS native project not found, running prebuild..."
             npm run prebuild:ios
           else
-            echo " iOS directory exists, running post-prebuild to ensure Fastlane files are present"
+            echo "✅ iOS directory exists, running post-prebuild to ensure Fastlane files are present"
             ./scripts/post-prebuild.sh
           fi
           
           echo "🔍 Verifying iOS project structure..."
           ls -la ios/
           if [ -d "ios" ] && [ -n "$(ls -A ios/*.xcworkspace 2>/dev/null)" ]; then
-            echo " iOS native project ready"
+            echo "✅ iOS native project ready"
           else
-            echo " iOS native project not created properly"
+            echo "❌ iOS native project not created properly"
             exit 1
           fi
 
@@ -203,6 +216,7 @@ jobs:
         working-directory: ios
         env:
           CI: true
+          NODE_ENV: production
           APP_STORE_CONNECT_API_KEY_JSON: ${{ secrets.APP_STORE_CONNECT_API_KEY_JSON }}
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           APPLE_ID: ${{ secrets.APPLE_ID }}
