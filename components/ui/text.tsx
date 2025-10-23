@@ -1,8 +1,10 @@
 import { cn } from "@/lib/utils";
-import * as Slot from "@rn-primitives/slot";
+import { SlotTextRoot } from "@rn-primitives/slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { Platform, Text as RNText, type Role } from "react-native";
+
+const TextClassContext = React.createContext<string | undefined>(undefined);
 
 const textVariants = cva(
   cn(
@@ -75,11 +77,12 @@ type TextProps = React.ComponentProps<typeof RNText> &
 
 const Text = React.forwardRef<React.ElementRef<typeof RNText>, TextProps>(
   ({ className, variant, size, asChild = false, role, ...props }, ref) => {
-    const Component = asChild ? Slot.Primitive : RNText;
+    const textClass = React.useContext(TextClassContext);
+    const Component = asChild ? SlotTextRoot : RNText;
     return (
       <Component
         ref={ref}
-        className={cn(textVariants({ variant, size }), className)}
+        className={cn(textVariants({ variant, size }), textClass, className)}
         role={role}
         {...props}
       />
@@ -89,5 +92,5 @@ const Text = React.forwardRef<React.ElementRef<typeof RNText>, TextProps>(
 
 Text.displayName = "Text";
 
-export { Text, textVariants };
+export { Text, TextClassContext, textVariants };
 export type { TextProps };

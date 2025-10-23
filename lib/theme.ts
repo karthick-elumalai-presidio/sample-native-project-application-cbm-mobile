@@ -79,3 +79,8 @@ export const darkTheme: Theme = {
     notification: THEME.dark.destructive
   }
 };
+
+export const NAV_THEME = {
+  light: lightTheme,
+  dark: darkTheme
+};
