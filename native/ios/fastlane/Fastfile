@@ -13,7 +13,26 @@ platform :ios do
   end
 
   ##############################################
-  # 2️⃣ Build Debug (Development) IPA
+  # 2️⃣ Build (No Signing - for CI validation)
+  ##############################################
+  desc "Build iOS app without signing (for CI validation)"
+  lane :build_ci do
+    UI.message("🔨 Building iOS app for CI validation (no signing)...")
+    gym(
+      project: "CbMmobileapp.xcodeproj",
+      scheme: "CbMmobileapp",
+      configuration: "Release",
+      skip_package_ipa: true,
+      skip_archive: true,
+      build_path: "build/ci",
+      derived_data_path: "build/derived_data",
+      xcargs: "CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO"
+    )
+    UI.success("✅ iOS build completed successfully (CI validation)")
+  end
+
+  ##############################################
+  # 3️⃣ Build Debug (Development) IPA
   ##############################################
   desc "Build development-signed IPA (Debug)"
   lane :build_debug do
@@ -31,7 +50,7 @@ platform :ios do
   end
 
   ##############################################
-  # 3️⃣ Build App Store (Release) IPA
+  # 4️⃣ Build App Store (Release) IPA
   ##############################################
   desc "Build App Store (Release) IPA for upload"
   lane :build_appstore_ipa do
@@ -77,7 +96,7 @@ platform :ios do
   end
 
   ##############################################
-  # 4️⃣ Upload to TestFlight (Dev/QA)
+  # 5️⃣ Upload to TestFlight (Dev/QA)
   ##############################################
   desc "Upload built IPA to TestFlight"
   lane :upload_testflight_ipa do |options|
@@ -112,7 +131,7 @@ platform :ios do
   end
 
   ##############################################
-  # 5️⃣ Upload to App Store (Production)
+  # 6️⃣ Upload to App Store (Production)
   ##############################################
   desc "Upload existing IPA to App Store"
   lane :upload_appstore_ipa do |options|
