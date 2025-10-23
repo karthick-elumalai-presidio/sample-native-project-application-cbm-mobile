@@ -10,7 +10,7 @@ export function useAsyncStorage<T>(key: string, initialValue: T) {
       const value = await storage.getItem<T>(key);
       if (value !== null) {
         setStoredValue(value);
-      }
+      },
       setIsLoading(false);
     };
 
@@ -26,10 +26,10 @@ export function useAsyncStorage<T>(key: string, initialValue: T) {
         await storage.setItem(key, valueToStore);
       } catch (error) {
         console.error(`Error setting value for key ${key}:`, error);
-      }
+      },
     },
     [key, storedValue],
   );
 
   return [storedValue, setValue, isLoading] as const;
-}
+},

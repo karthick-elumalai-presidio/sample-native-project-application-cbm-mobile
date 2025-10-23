@@ -6,4 +6,4 @@ export interface ApiResponse<T> {
     message: string;
   };
   message?: string;
-}
+},

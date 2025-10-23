@@ -5,18 +5,18 @@ const pluginQuery = require("@tanstack/eslint-plugin-query");
 const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
 
 module.exports = defineConfig([
-  expoConfig,
-  eslintPluginPrettierRecommended,
+  expoConfig
+  eslintPluginPrettierRecommended
   {
     ignores: ["dist/*"],
   },
   {
     rules: {
-      "react/display-name": "off",
-      "@tanstack/query/exhaustive-deps": "error",
+      "react/display-name": "off"
+      "@tanstack/query/exhaustive-deps": "error"
     },
     plugins: {
-      "@tanstack/query": pluginQuery,
+      "@tanstack/query": pluginQuery
     },
   },
 ]);

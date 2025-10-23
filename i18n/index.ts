@@ -13,20 +13,20 @@ const deviceLanguage = getLocales()[0]?.languageCode || "en";
 i18n.use(initReactI18next).init({
   resources: {
     en: {
-      translation: enTranslation,
+      translation: enTranslation
     },
     ja: {
-      translation: jaTranslation,
+      translation: jaTranslation
     },
     zh: {
-      translation: zhTranslation,
+      translation: zhTranslation
     },
   },
-  lng: deviceLanguage,
-  fallbackLng: "en",
-  debug: false,
+  lng: deviceLanguage
+  fallbackLng: "en"
+  debug: false
   interpolation: {
-    escapeValue: false,
+    escapeValue: false
   },
 });
 

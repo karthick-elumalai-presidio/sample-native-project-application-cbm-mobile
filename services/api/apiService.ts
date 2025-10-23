@@ -7,9 +7,9 @@ import { API_BASE_URL } from "@/services/api/apiConfig";
  * Pre-configured axios instance that can be used directly in queries
  */
 export const apiClient: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: API_BASE_URL
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "application/json"
   },
   timeout: 30000, // 30 seconds
 });

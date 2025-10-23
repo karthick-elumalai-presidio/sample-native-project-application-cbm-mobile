@@ -25,13 +25,13 @@ export default function Layout() {
             top: 0,
             left: 0,
             right: 0,
-            bottom: 0,
+            bottom: 0
           }}
         />
         <Stack
           screenOptions={{
             headerShown: false,
-            contentStyle: { backgroundColor: "transparent" },
+            contentStyle: { backgroundColor: "transparent" }
           }}
         />
         <PortalHost />
