@@ -76,7 +76,10 @@ jobs:
       - name: Expo Prebuild (Android)
         run: |
           if [ ! -f "android/gradlew" ]; then
-            bun run prebuild --platform android --clean
+            bun run prebuild:android
+          else
+            echo "Android directory exists, running post-prebuild to ensure Fastlane files are present"
+            ./scripts/post-prebuild.sh
           fi
 
       - name: Setup Java
@@ -146,7 +149,10 @@ jobs:
       - name: Expo Prebuild (iOS)
         run: |
           if [ ! -d "ios/*.xcworkspace" ]; then
-            bun run prebuild --platform ios --clean
+            bun run prebuild:ios
+          else
+            echo "iOS directory exists, running post-prebuild to ensure Fastlane files are present"
+            ./scripts/post-prebuild.sh
           fi
 
 
@@ -242,6 +248,9 @@ jobs:
           ruby-version: '3.2'
           bundler-cache: false
 
+      - name: Restore Fastlane files for deployment
+        run: ./scripts/post-prebuild.sh
+
       - name: Deploy Android to Internal Track
         working-directory: android
         env:
@@ -278,6 +287,9 @@ jobs:
         with:
           path: artifacts
 
+      - name: Restore Fastlane files for deployment
+        run: ./scripts/post-prebuild.sh
+
       - name: Deploy Android (QA)
         working-directory: android
         env:
@@ -307,6 +319,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: artifacts
+
+      - name: Restore Fastlane files for deployment
+        run: ./scripts/post-prebuild.sh
 
       - name: Deploy Android to Production
         working-directory: android

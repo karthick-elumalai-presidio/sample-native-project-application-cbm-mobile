@@ -1,0 +1,63 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    fastlane (2.228.0)
+      addressable (>= 2.8, < 3.1)
+      aws-sdk-core (>= 3.224.1, < 4.0)
+      aws-sdk-kms (>= 1.101.0, < 2.0)
+      aws-sdk-s3 (>= 1.188.0, < 2.0)
+      babosa (>= 1.0.4, < 2.0)
+      colored
+      commander (>= 4.6.0, < 5.0)
+      excon (>= 0.109.0, < 1.0)
+      faraday (>= 1.10.4, < 2.0)
+      faraday-cookie_jar (>= 0.0.7, < 1.0)
+      faraday-em_http (>= 1.0.0, < 2.0)
+      faraday-em_synchrony (>= 1.0.1, < 2.0)
+      faraday-excon (>= 1.1.0, < 2.0)
+      faraday-httpclient (>= 1.0.1, < 2.0)
+      faraday-multipart (>= 1.1.1, < 2.0)
+      faraday-net_http (>= 1.0.2, < 2.0)
+      faraday-net_http_persistent (>= 1.2.0, < 2.0)
+      faraday-patron (>= 1.0.0, < 2.0)
+      faraday-rack (>= 1.0.0, < 2.0)
+      faraday-retry (>= 1.0.3, < 2.0)
+      fastimage (>= 2.4.0, < 3.0)
+      gh_inspector (>= 1.1.3, < 2.0)
+      google-apis-androidpublisher_v3 (>= 0.54.0, < 1.0)
+      google-apis-core (>= 0.11.3, < 1.0)
+      google-apis-iamcredentials_v1 (>= 0.17.0, < 1.0)
+      google-apis-playcustomapp_v1 (>= 0.13.0, < 1.0)
+      google-apis-storage_v1 (>= 0.29.0, < 1.0)
+      google-cloud-core (>= 1.6.1, < 2.0)
+      google-cloud-env (>= 1.6.0, < 2.0)
+      google-cloud-errors (>= 1.3.1, < 2.0)
+      google-cloud-storage (>= 1.45.0, < 2.0)
+      googleauth (>= 1.8.1, < 2.0)
+      highline (>= 2.0.3, < 3.0)
+      json (< 3.0)
+      mini_magick (>= 4.13.2, < 5.0)
+      multi_json (>= 1.15.0, < 2.0)
+      multipart-post (>= 2.4.1, < 3.0)
+      plist (>= 3.7.2, < 4.0)
+      rubyzip (>= 2.4.1, < 3.0)
+      security (>= 0.1.5, < 1.0)
+      simctl (>= 1.6.10, < 2.0)
+      terminal-notifier (>= 2.0.0, < 3.0)
+      terminal-table (>= 3.0.2, < 4.0)
+      tty-screen (>= 0.8.2, < 1.0)
+      tty-spinner (>= 0.9.3, < 1.0)
+      word_wrap (>= 1.0.0, < 2.0)
+      xcodeproj (>= 1.27.0, < 2.0)
+      xcpretty (>= 0.4.1, < 1.0)
+      xcpretty-travis-formatter (>= 1.0.1, < 2.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  fastlane (~> 2.228)
+  xcpretty (~> 0.4)
+
+BUNDLED WITH
+   2.6.0
