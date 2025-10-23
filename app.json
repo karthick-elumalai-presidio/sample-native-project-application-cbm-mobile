@@ -13,8 +13,7 @@
         {
           "android": {
             "minifyEnabled": true,
-            "enableProguardInReleaseBuilds": true,
-            "enableShrinkResourcesInReleaseBuilds": true
+            "enableProguardInReleaseBuilds": true
           },
           "ios": {
             "deploymentTarget": "15.1"
