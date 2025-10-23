@@ -1,13 +1,13 @@
-import '@/global.css';
-import Providers from '@/providers/Providers';
+import "@/global.css";
+import Providers from "@/providers/Providers";
 
-import { Stack } from 'expo-router';
-import '@/i18n';
-import { LinearGradient } from 'expo-linear-gradient';
-import { useColorScheme } from 'nativewind';
-import { PortalHost } from '@rn-primitives/portal';
-import { THEME } from '@/lib/theme';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { Stack } from "expo-router";
+import "@/i18n";
+import { LinearGradient } from "expo-linear-gradient";
+import { useColorScheme } from "nativewind";
+import { PortalHost } from "@rn-primitives/portal";
+import { THEME } from "@/lib/theme";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Layout() {
   const { colorScheme } = useColorScheme();
@@ -16,12 +16,12 @@ export default function Layout() {
       <SafeAreaView className="flex-1">
         <LinearGradient
           colors={
-            colorScheme === 'dark'
+            colorScheme === "dark"
               ? [THEME.dark.background, THEME.dark.black]
               : [THEME.light.background, THEME.light.background]
           }
           style={{
-            position: 'absolute',
+            position: "absolute",
             top: 0,
             left: 0,
             right: 0,
@@ -31,7 +31,7 @@ export default function Layout() {
         <Stack
           screenOptions={{
             headerShown: false,
-            contentStyle: { backgroundColor: 'transparent' },
+            contentStyle: { backgroundColor: "transparent" },
           }}
         />
         <PortalHost />

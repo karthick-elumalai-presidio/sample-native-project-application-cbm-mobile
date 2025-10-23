@@ -8,7 +8,7 @@
     "ios": "expo start -c --ios",
     "prebuild": "expo prebuild",
     "lint": "eslint \"**/*.{js,jsx,ts,tsx,css}\"",
-    "format": "eslint \"**/*.{js,jsx,ts,tsx,css}\" --fix && prettier \"**/*.{js,jsx,ts,tsx,json,css}\" --write",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css}\" --config utils/prettier.config.js && eslint \"**/*.{js,jsx,ts,tsx,css}\" --fix",
     "format:check": "prettier -c \"**/*.{js,jsx,ts,tsx,json,css}\"",
     "type-check": "tsc --noEmit",
     "test": "echo \"No tests configured yet\"",
