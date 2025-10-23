@@ -49,6 +49,9 @@ jobs:
       - name: Lint
         run: bun run lint
 
+      - name: Format Check
+        run: bun run format:check
+
       - name: Typecheck
         run: bun run type-check
 
@@ -75,8 +78,22 @@ jobs:
 
       - name: Expo Prebuild (Android)
         run: |
+          echo "🔍 Checking Android native project..."
           if [ ! -f "android/gradlew" ]; then
-            bun run prebuild --platform android --clean
+            echo "📱 Android native project not found, running prebuild..."
+            bun run prebuild:android
+          else
+            echo "✅ Android directory exists, running post-prebuild to ensure Fastlane files are present"
+            ./scripts/post-prebuild.sh
+          fi
+          
+          echo "🔍 Verifying Android project structure..."
+          ls -la android/
+          if [ -f "android/gradlew" ]; then
+            echo "✅ Android native project ready"
+          else
+            echo "❌ Android native project not created properly"
+            exit 1
           fi
 
       - name: Setup Java
@@ -93,14 +110,14 @@ jobs:
 
       - name: Install Fastlane dependencies
         run: |
-          echo "🔍 Debug: Current directory: $(pwd)"
-          echo "🔍 Debug: Contents of android directory:"
+          echo " Debug: Current directory: $(pwd)"
+          echo " Debug: Contents of android directory:"
           ls -la android/
-          echo "🔍 Debug: Gemfile exists: $(test -f android/Gemfile && echo 'YES' || echo 'NO')"
-          echo "🔍 Debug: Gemfile contents:"
+          echo " Debug: Gemfile exists: $(test -f android/Gemfile && echo 'YES' || echo 'NO')"
+          echo " Debug: Gemfile contents:"
           cat android/Gemfile
           cd android
-          echo "📦 Installing Fastlane dependencies..."
+          echo " Installing Fastlane dependencies..."
           bundle config set --local frozen false
           bundle install
 
@@ -145,8 +162,22 @@ jobs:
 
       - name: Expo Prebuild (iOS)
         run: |
-          if [ ! -d "ios/*.xcworkspace" ]; then
-            bun run prebuild --platform ios --clean
+          echo "🔍 Checking iOS native project..."
+          if [ ! -d "ios" ] || [ -z "$(ls -A ios/*.xcworkspace 2>/dev/null)" ]; then
+            echo "📱 iOS native project not found, running prebuild..."
+            bun run prebuild:ios
+          else
+            echo "✅ iOS directory exists, running post-prebuild to ensure Fastlane files are present"
+            ./scripts/post-prebuild.sh
+          fi
+          
+          echo "🔍 Verifying iOS project structure..."
+          ls -la ios/
+          if [ -d "ios" ] && [ -n "$(ls -A ios/*.xcworkspace 2>/dev/null)" ]; then
+            echo "✅ iOS native project ready"
+          else
+            echo "❌ iOS native project not created properly"
+            exit 1
           fi
 
 
@@ -197,7 +228,7 @@ jobs:
     environment:
       name: development
     steps:
-      - run: echo "✅ Development deployment approved"
+      - run: echo " Development deployment approved"
 
   approve_qa:
     name: Manual Approval (QA)
@@ -207,7 +238,7 @@ jobs:
     environment:
       name: qa
     steps:
-      - run: echo "✅ QA deployment approved"
+      - run: echo " QA deployment approved"
 
   approve_production:
     name: Manual Approval (Production)
@@ -217,7 +248,7 @@ jobs:
     environment:
       name: production
     steps:
-      - run: echo "✅ Production deployment approved"
+      - run: echo " Production deployment approved"
 
   deploy_development:
     name: Deploy to Development
@@ -241,6 +272,9 @@ jobs:
         with:
           ruby-version: '3.2'
           bundler-cache: false
+
+      - name: Restore Fastlane files for deployment
+        run: ./scripts/post-prebuild.sh
 
       - name: Deploy Android to Internal Track
         working-directory: android
@@ -273,10 +307,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download Artifacts
+      - name: Download Android Artifacts
         uses: actions/download-artifact@v4
         with:
-          path: artifacts
+          name: android-build
+          path: android-artifacts
+
+      - name: Download iOS Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-build
+          path: ios-artifacts
+
+      - name: Restore Fastlane files for deployment
+        run: ./scripts/post-prebuild.sh
 
       - name: Deploy Android (QA)
         working-directory: android
@@ -290,7 +334,7 @@ jobs:
         env:
           APP_STORE_CONNECT_API_KEY_JSON: ${{ secrets.APP_STORE_CONNECT_API_KEY_JSON }}
         run: |
-          bundle exec fastlane upload_testflight_ipa ipa:$(ls ../artifacts/ios-build/*.ipa | head -n1)
+          bundle exec fastlane upload_testflight_ipa ipa:$(ls ../ios-artifacts/*.ipa | head -n1)
 
   deploy_production:
     name: Deploy to Production
@@ -303,10 +347,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Download Artifacts
+      - name: Download Android Artifacts
         uses: actions/download-artifact@v4
         with:
-          path: artifacts
+          name: android-build
+          path: android-artifacts
+
+      - name: Download iOS Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-build
+          path: ios-artifacts
+
+      - name: Restore Fastlane files for deployment
+        run: ./scripts/post-prebuild.sh
 
       - name: Deploy Android to Production
         working-directory: android
@@ -320,4 +374,4 @@ jobs:
         env:
           APP_STORE_CONNECT_API_KEY_JSON: ${{ secrets.APP_STORE_CONNECT_API_KEY_JSON }}
         run: |
-          bundle exec fastlane upload_appstore_ipa ipa:$(ls ../artifacts/ios-build/*.ipa | head -n1)
+          bundle exec fastlane upload_appstore_ipa ipa:$(ls ../ios-artifacts/*.ipa | head -n1)
