@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils";
-import { SlotTextRoot } from "@rn-primitives/slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { Platform, Text as RNText, type Role } from "react-native";
@@ -71,16 +70,14 @@ const textVariants = cva(
 
 type TextProps = React.ComponentProps<typeof RNText> &
   VariantProps<typeof textVariants> & {
-    asChild?: boolean;
     role?: Role;
   };
 
 const Text = React.forwardRef<React.ElementRef<typeof RNText>, TextProps>(
-  ({ className, variant, size, asChild = false, role, ...props }, ref) => {
+  ({ className, variant, size, role, ...props }, ref) => {
     const textClass = React.useContext(TextClassContext);
-    const Component = asChild ? SlotTextRoot : RNText;
     return (
-      <Component
+      <RNText
         ref={ref}
         className={cn(textVariants({ variant, size }), textClass, className)}
         role={role}
