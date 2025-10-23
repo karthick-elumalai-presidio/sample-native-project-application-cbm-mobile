@@ -20,8 +20,8 @@ coverage/
 .hai.config
 .hai/
 
-ios
-android
+# ios
+# android
 
 # macOS
 .DS_Store

@@ -1,0 +1,212 @@
+name: PR Validation
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+      - qa
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  id-token: write
+  pull-requests: write
+
+env:
+  NODE_VERSION: '20'
+  BUN_VERSION: '1.1.34'
+
+jobs:
+  validate:
+    name: Code Quality & Build Validation
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout Code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: ''
+
+      # Setup Bun
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: ${{ env.BUN_VERSION }}
+
+      # Print Environment Info
+      - name: Environment Details
+        run: |
+          echo "Node: $(node --version)"
+          echo "Bun: $(bun --version)"
+          echo "Branch: ${{ github.head_ref }} → Base: ${{ github.base_ref }}"
+          echo "PR Number: ${{ github.event.number }}"
+
+      # Install Dependencies
+      - name: Install Dependencies
+        run: |
+          echo " Installing dependencies with Bun..."
+          bun install --frozen-lockfile || bun install
+          echo " Dependencies installed successfully."
+
+      # Run Code Quality Checks
+      - name: Run Code Quality Checks
+        run: |
+          FAILED=0
+          
+          echo "🔍 Running ESLint..."
+          if bun run lint; then
+            echo "✅ ESLint passed"
+          else
+            echo "❌ ESLint failed"
+            FAILED=1
+          fi
+          
+          echo "🎨 Checking code formatting..."
+          if bun run format:check; then
+            echo "✅ Prettier format check passed"
+          else
+            echo "❌ Prettier format check failed"
+            FAILED=1
+          fi
+
+          echo "🔧 Running TypeScript checks..."
+          if bun run type-check; then
+            echo "✅ TypeScript checks passed"
+          else
+            echo "❌ TypeScript errors found"
+            FAILED=1
+          fi
+
+          if [ $FAILED -eq 1 ]; then
+            echo "❌ Some validation checks failed."
+            exit 1
+          else
+            echo "✅ All code quality checks passed!"
+          fi
+
+      # Run Tests
+      - name: Run Tests with Coverage
+        run: |
+          echo " Running unit tests with coverage..."
+          bun run test:coverage
+
+      # Verify native projects exist (should be committed to git)
+      - name: Verify Android native project exists
+        run: |
+          echo " Verifying Android native project..."
+          if [ ! -f "android/gradlew" ]; then
+            echo " ERROR: Android native project not found!"
+            echo " Missing: android/gradlew"
+            echo ""
+            echo " The native android/ folder should be committed to git"
+            echo "   If missing, run: bun run prebuild --platform android --clean"
+            exit 1
+          fi
+          echo " Android native project verified"
+
+      # Android Build Check
+      - name: Setup Java for Android
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Ruby for Fastlane
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+          bundler-cache: true
+          working-directory: './android'
+
+      - name: Android Build Check
+        working-directory: android
+        run: |
+          echo "🔧 Installing Ruby dependencies..."
+          bundle install
+          
+          echo "🏗️ Running Android build check..."
+          if bundle exec fastlane build_debug; then
+            echo "✅ Android build check passed"
+          else
+            echo "❌ Android build check failed"
+            exit 1
+          fi
+
+      # iOS Build Check (Skip on Ubuntu)
+      - name: iOS Build Check (Skipped on Ubuntu)
+        run: |
+          echo " iOS build check skipped on Ubuntu runner"
+          echo " To fully validate iOS builds, use a macOS runner in your deployment workflow"
+
+      # Comment PR with Results
+      - name: Comment PR with Validation Results
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && comment.body.includes('## PR Validation Results')
+            );
+            
+            const body = `## PR Validation Results
+            
+            **Branch:** \`${{ github.head_ref }}\` → \`${{ github.base_ref }}\`
+            **Commit:** \`${{ github.sha }}\`
+            **Status:** ${{ job.status == 'success' && ' All checks passed!' || ' Some checks failed' }}
+            
+            ### Validation Steps:
+            -  Code quality checks (ESLint, Prettier, TypeScript)
+            -  Unit tests with coverage
+            -  Android build validation
+            -  iOS build validation (skipped on Ubuntu)
+            
+            ### Next Steps:
+            ${job.status == 'success' 
+              ? ' Ready for merge! All validation checks passed.' 
+              : ' Please fix the failing checks before merging.'}
+            
+            ---
+            *This comment was automatically generated by the PR validation workflow.*`;
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: body
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: body
+              });
+            }
+
+      # Summary
+      - name: Validation Summary
+        if: always()
+        run: |
+          if [ "${{ job.status }}" == "success" ]; then
+            echo " PR Validation completed successfully for ${{ github.head_ref }}"
+            echo " Ready for merge!"
+          else
+            echo " PR Validation failed for ${{ github.head_ref }}"
+            echo " Please review and fix the issues above."
+            exit 1
+          fi
