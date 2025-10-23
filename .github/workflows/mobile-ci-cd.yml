@@ -15,7 +15,7 @@ on:
         options:
           - development
           - qa
-          - production
+          - production 
 
 concurrency:
   group: mobile-${{ github.ref }}
