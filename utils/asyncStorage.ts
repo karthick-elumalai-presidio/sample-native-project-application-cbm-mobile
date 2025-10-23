@@ -8,7 +8,7 @@ export const storage = {
     } catch (error) {
       console.error(`Error getting item ${key}:`, error);
       return null;
-    },
+    }
   },
 
   async setItem<T>(key: string, value: T): Promise<void> {
@@ -16,7 +16,7 @@ export const storage = {
       await AsyncStorage.setItem(key, JSON.stringify(value));
     } catch (error) {
       console.error(`Error setting item ${key}:`, error);
-    },
+    }
   },
 
   async removeItem(key: string): Promise<void> {
@@ -24,6 +24,6 @@ export const storage = {
       await AsyncStorage.removeItem(key);
     } catch (error) {
       console.error(`Error removing item ${key}:`, error);
-    },
-  },
+    }
+  }
 };

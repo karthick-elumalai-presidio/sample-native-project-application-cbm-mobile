@@ -20,9 +20,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <ErrorBoundary>
       <ThemeProvider>
         <QueryClientProvider client={queryClient}>
-          {children},
+          {children}
         </QueryClientProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
-},
+}

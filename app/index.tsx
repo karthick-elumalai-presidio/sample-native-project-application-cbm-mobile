@@ -37,4 +37,4 @@ export default function Home() {
       </Card>
     </View>
   );
-},
+}
