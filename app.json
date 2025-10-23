@@ -13,10 +13,12 @@
         {
           "android": {
             "minifyEnabled": true,
-            "enableProguardInReleaseBuilds": true
+            "enableProguardInReleaseBuilds": true,
+            "newArchEnabled": false
           },
           "ios": {
-            "deploymentTarget": "15.1"
+            "deploymentTarget": "15.1",
+            "newArchEnabled": false
           }
         }
       ]
