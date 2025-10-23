@@ -226,4 +226,4 @@ DEPENDENCIES
   xcpretty (~> 0.4)
 
 BUNDLED WITH
-   1.17.2
+   2.4.19
