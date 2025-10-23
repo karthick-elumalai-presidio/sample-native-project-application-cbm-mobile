@@ -192,13 +192,11 @@ jobs:
           bundle install
         
 
-      - name: Build iOS (CI validation - no signing)
+      - name: Skip iOS build (no credentials)
         if: ${{ env.HAS_IOS_API_KEY == 'false' }}
-        working-directory: ios
-        env:
-          CI: true
         run: |
-          bundle exec fastlane build_ci
+          echo "⏭️  Skipping iOS build - no signing credentials provided"
+          echo "To enable iOS builds, add APP_STORE_CONNECT_API_KEY_JSON secret"
 
       - name: Build iOS App Store IPA (with signing)
         if: ${{ env.HAS_IOS_API_KEY == 'true' }}
