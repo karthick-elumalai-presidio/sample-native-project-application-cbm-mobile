@@ -93,6 +93,12 @@ jobs:
 
       - name: Install Fastlane dependencies
         run: |
+          echo "🔍 Debug: Current directory: $(pwd)"
+          echo "🔍 Debug: Contents of android directory:"
+          ls -la android/
+          echo "🔍 Debug: Gemfile exists: $(test -f android/Gemfile && echo 'YES' || echo 'NO')"
+          echo "🔍 Debug: Gemfile contents:"
+          cat android/Gemfile
           cd android
           echo "📦 Installing Fastlane dependencies..."
           bundle config set --local frozen false
@@ -153,6 +159,12 @@ jobs:
         
       - name: Install Fastlane dependencies
         run: |
+          echo "🔍 Debug: Current directory: $(pwd)"
+          echo "🔍 Debug: Contents of ios directory:"
+          ls -la ios/
+          echo "🔍 Debug: Gemfile exists: $(test -f ios/Gemfile && echo 'YES' || echo 'NO')"
+          echo "🔍 Debug: Gemfile contents:"
+          cat ios/Gemfile
           cd ios
           echo "📦 Installing Fastlane dependencies..."
           bundle config set --local frozen false
