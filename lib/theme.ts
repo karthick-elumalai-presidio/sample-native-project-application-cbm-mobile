@@ -2,79 +2,80 @@ import { DarkTheme, DefaultTheme, type Theme } from "@react-navigation/native";
 
 export const THEME = {
   light: {
-    background: "#EFF6FF"
-    foreground: "#000000"
-    card: "#FFFFFF"
-    cardForeground: "#000000"
-    popover: "#FFFFFF"
-    popoverForeground: "#000000"
-    primary: "#0046AD"
-    primaryForeground: "#FFFFFF"
-    secondary: "#DBE9FE"
-    secondaryForeground: "#62748E"
-    muted: "#DBE9FE"
-    mutedForeground: "#62748E"
-    accent: "#007BFF"
-    accentForeground: "#FFFFFF"
-    destructive: "#FF4C4C"
-    border: "#C5D9F2"
-    input: "#C5D9F2"
-    ring: "#0046AD"
-    radius: "0.625rem"
+    background: "#EFF6FF",
+    foreground: "#000000",
+    card: "#FFFFFF",
+    cardForeground: "#000000",
+    popover: "#FFFFFF",
+    popoverForeground: "#000000",
+    primary: "#0046AD",
+    primaryForeground: "#FFFFFF",
+    secondary: "#DBE9FE",
+    secondaryForeground: "#62748E",
+    muted: "#DBE9FE",
+    mutedForeground: "#62748E",
+    accent: "#007BFF",
+    accentForeground: "#FFFFFF",
+    destructive: "#FF4C4C",
+    border: "#C5D9F2",
+    input: "#C5D9F2",
+    ring: "#0046AD",
+    chart1: "#0046AD",
+    chart2: "#007BFF",
+    chart3: "#00BFFF",
+    chart4: "#87CEEB",
+    chart5: "#B0E0E6"
   },
   dark: {
-    background: "#0046AD"
+    background: "#0A0A0A",
+    foreground: "#FFFFFF",
+    card: "#1A1A1A",
+    cardForeground: "#FFFFFF",
+    popover: "#1A1A1A",
+    popoverForeground: "#FFFFFF",
+    primary: "#0046AD",
+    primaryForeground: "#FFFFFF",
+    secondary: "#1A1A1A",
+    secondaryForeground: "#A0A0A0",
+    muted: "#1A1A1A",
+    mutedForeground: "#A0A0A0",
+    accent: "#007BFF",
+    accentForeground: "#FFFFFF",
+    destructive: "#FF4C4C",
+    border: "#2A2A2A",
+    input: "#2A2A2A",
+    ring: "#0046AD",
+    chart1: "#0046AD",
+    chart2: "#007BFF",
+    chart3: "#00BFFF",
+    chart4: "#87CEEB",
+    chart5: "#B0E0E6",
     black: "#000000"
-    foreground: "#FFFFFF"
-    card: "#141414"
-    cardForeground: "#FFFFFF"
-    popover: "#141414"
-    popoverForeground: "#FFFFFF"
-    primary: "#007BFF"
-    primaryForeground: "#FFFFFF"
-    secondary: "#262626"
-    secondaryForeground: "#C9C9C9"
-    muted: "#262626"
-    mutedForeground: "#C9C9C9"
-    accent: "#007BFF"
-    accentForeground: "#FFFFFF"
-    destructive: "#FF4C4C"
-    border: "#333333"
-    input: "#333333"
-    ring: "#007BFF"
-    radius: "0.625rem"
-  },
+  }
 };
 
-// Gradient colors for dark mode background
-export const GRADIENT_COLORS = {
-  dark: {
-    start: "#0046AD"
-    end: "#000000"
-  },
+export const lightTheme: Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: THEME.light.primary,
+    background: THEME.light.background,
+    card: THEME.light.card,
+    text: THEME.light.foreground,
+    border: THEME.light.border,
+    notification: THEME.light.destructive
+  }
 };
 
-export const NAV_THEME: Record<"light" | "dark", Theme> = {
-  light: {
-    ...DefaultTheme
-    colors: {
-      background: THEME.light.background
-      border: THEME.light.border
-      card: THEME.light.card
-      notification: THEME.light.destructive
-      primary: THEME.light.primary
-      text: THEME.light.foreground
-    },
-  },
-  dark: {
-    ...DarkTheme
-    colors: {
-      background: THEME.dark.background
-      border: THEME.dark.border
-      card: THEME.dark.card
-      notification: THEME.dark.destructive
-      primary: THEME.dark.primary
-      text: THEME.dark.foreground
-    },
-  },
+export const darkTheme: Theme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    primary: THEME.dark.primary,
+    background: THEME.dark.background,
+    card: THEME.dark.card,
+    text: THEME.dark.foreground,
+    border: THEME.dark.border,
+    notification: THEME.dark.destructive
+  }
 };

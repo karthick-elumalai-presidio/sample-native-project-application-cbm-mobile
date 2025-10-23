@@ -22,12 +22,12 @@ i18n.use(initReactI18next).init({
       translation: zhTranslation
     },
   },
-  lng: deviceLanguage
-  fallbackLng: "en"
-  debug: false
+  lng: deviceLanguage,
+  fallbackLng: "en",
+  debug: false,
   interpolation: {
     escapeValue: false
-  },
+  }
 });
 
 export default i18n;

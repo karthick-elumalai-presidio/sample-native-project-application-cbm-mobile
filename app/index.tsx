@@ -3,11 +3,11 @@ import { useTheme } from "@/providers/ThemeProvider";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
 import {
-  Card
-  CardContent
-  CardDescription
-  CardFooter
-  CardHeader
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
   CardTitle
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";

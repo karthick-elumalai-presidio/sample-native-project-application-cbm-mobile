@@ -7,74 +7,74 @@ function Card({ className, ...props }: ViewProps & React.RefAttributes<View>) {
     <TextClassContext.Provider value="text-card-foreground">
       <View
         className={cn(
-          "flex flex-col gap-6 rounded-xl border border-border bg-card py-6 shadow-sm shadow-black/5"
+          "flex flex-col gap-6 rounded-xl border border-border bg-card py-6 shadow-sm shadow-black/5",
           className
-        )},
-        {...props},
+        )}
+        {...props}
       />
     </TextClassContext.Provider>
   );
-},
+}
 
 function CardHeader({
-  className
+  className,
   ...props
 }: ViewProps & React.RefAttributes<View>) {
   return (
     <View className={cn("flex flex-col gap-1.5 px-6", className)} {...props} />
   );
-},
+}
 
 function CardTitle({
-  className
+  className,
   ...props
 }: React.ComponentProps<typeof Text> & React.RefAttributes<Text>) {
   return (
     <Text
       role="heading"
-      aria-level={3},
-      className={cn("font-semibold leading-none", className)},
-      {...props},
+      aria-level={3}
+      className={cn("font-semibold leading-none", className)}
+      {...props}
     />
   );
-},
+}
 
 function CardDescription({
-  className
+  className,
   ...props
 }: React.ComponentProps<typeof Text> & React.RefAttributes<Text>) {
   return (
     <Text
-      className={cn("text-sm text-muted-foreground", className)},
-      {...props},
+      className={cn("text-sm text-muted-foreground", className)}
+      {...props}
     />
   );
-},
+}
 
 function CardContent({
-  className
+  className,
   ...props
 }: ViewProps & React.RefAttributes<View>) {
   return <View className={cn("px-6", className)} {...props} />;
-},
+}
 
 function CardFooter({
-  className
+  className,
   ...props
 }: ViewProps & React.RefAttributes<View>) {
   return (
     <View
-      className={cn("flex flex-row items-center px-6", className)},
-      {...props},
+      className={cn("flex flex-row items-center px-6", className)}
+      {...props}
     />
   );
-},
+}
 
 export {
-  Card
-  CardContent
-  CardDescription
-  CardFooter
-  CardHeader
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
   CardTitle
 };
