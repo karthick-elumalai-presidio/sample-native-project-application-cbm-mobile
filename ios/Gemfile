@@ -1,7 +1,11 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
-gem "fastlane"
-gem "xcpretty"
+# Fastlane and related gems
+gem "fastlane", "~> 2.228"
+gem "xcpretty", "~> 0.4"
 
-plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
+# Load plugins if they exist
+plugins_path = File.join(File.dirname(__FILE__), "fastlane", "Pluginfile")
 eval_gemfile(plugins_path) if File.exist?(plugins_path)
